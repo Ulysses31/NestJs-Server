@@ -5,11 +5,7 @@ import { PhotoModule } from './features/photos/photos.module';
 import { TodoModule } from './features/todos/todos.module';
 import { UserModule } from './features/users/users.module';
 import { BaseService } from './core/services/base.service';
-import {
-	MiddlewareConsumer,
-	Module,
-	RequestMethod
-} from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { HttpModule } from '@nestjs/axios';
 import { DbMiddleware } from './core/db.middleware';
