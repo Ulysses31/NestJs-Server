@@ -7,7 +7,8 @@ import {
 	Param,
 	ParseIntPipe,
 	Post,
-	Put
+	Put,
+	Version
 } from '@nestjs/common';
 import { BaseEditorController } from 'src/core/base-Editor-controller';
 import { AxiosResponse } from 'axios';
@@ -21,6 +22,7 @@ export class PostsEditorController extends BaseEditorController<PostDto> {
 		super(postservice);
 	}
 
+	@Version('1')
 	@Get(':id')
 	findById(
 		@Param(
@@ -34,11 +36,13 @@ export class PostsEditorController extends BaseEditorController<PostDto> {
 		return this.findDtoById(id);
 	}
 
+	@Version('1')
 	@Post()
 	newDto(@Body() dto: PostDto): Observable<AxiosResponse<PostDto>> {
 		return this.insertNewDto(dto);
 	}
 
+	@Version('1')
 	@Put(':id')
 	updateDto(
 		@Param(
@@ -53,6 +57,7 @@ export class PostsEditorController extends BaseEditorController<PostDto> {
 		return this.modifyDto(id, dto);
 	}
 
+	@Version('1')
 	@Delete(':id')
 	deleteDto(
 		@Param(

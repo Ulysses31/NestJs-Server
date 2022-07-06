@@ -1,7 +1,7 @@
-GET http://localhost:3000/todos HTTP/1.1
-GET http://localhost:3000/todos/11 HTTP/1.1
-DELETE http://localhost:3000/todos/11 HTTP/1.1
-POST http://localhost:3000/todos HTTP/1.1
+GET http://localhost:3000/v1/todos HTTP/1.1
+GET http://localhost:3000/v1/todos/11 HTTP/1.1
+DELETE http://localhost:3000/v1/todos/11 HTTP/1.1
+POST http://localhost:3000/v1/todos HTTP/1.1
 Content-Type: application/json
 
 {
@@ -10,7 +10,7 @@ Content-Type: application/json
 	"completed": false
 }
 
-PUT http://localhost:3000/todos/3 HTTP/1.1
+PUT http://localhost:3000/v1/todos/3 HTTP/1.1
 Content-Type: application/json
 
 {
