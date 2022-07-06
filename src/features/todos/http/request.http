@@ -1,0 +1,21 @@
+GET http://localhost:3000/todos HTTP/1.1
+GET http://localhost:3000/todos/11 HTTP/1.1
+DELETE http://localhost:3000/todos/11 HTTP/1.1
+POST http://localhost:3000/todos HTTP/1.1
+Content-Type: application/json
+
+{
+	"userId": 1,
+	"title": "TEST vero rerum temporibus dolor",
+	"completed": false
+}
+
+PUT http://localhost:3000/todos/3 HTTP/1.1
+Content-Type: application/json
+
+{
+	"id": 3,
+	"userId": 1,
+	"title": "MODIFIED vero rerum temporibus dolor",
+	"completed": false
+}

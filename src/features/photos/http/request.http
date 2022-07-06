@@ -1,0 +1,23 @@
+GET http://localhost:3000/photos HTTP/1.1
+GET http://localhost:3000/photos/11 HTTP/1.1
+DELETE http://localhost:3000/photos/11 HTTP/1.1
+POST http://localhost:3000/photos HTTP/1.1
+Content-Type: application/json
+
+{
+	"albumId": 1,
+	"title": "New album",
+	"url": "https://via.placeholder.com/600/24f355",
+	"thumbnailUrl": "https://via.placeholder.com/150/24f355"
+}
+
+PUT http://localhost:3000/photos/3 HTTP/1.1
+Content-Type: application/json
+
+{
+	"id": 1,
+	"albumId": 1,
+	"title": "MODIFIED album",
+	"url": "https://via.placeholder.com/600/24f355",
+	"thumbnailUrl": "https://via.placeholder.com/150/24f355"
+}

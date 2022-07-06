@@ -1,0 +1,55 @@
+GET http://localhost:3000/users HTTP/1.1
+GET http://localhost:3000/users/11 HTTP/1.1
+DELETE http://localhost:3000/users/11 HTTP/1.1
+POST http://localhost:3000/users HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Iordanidis Chris",
+    "username": "admin",
+    "email": "admin@datacenter.com",
+    "address": {
+        "street": "Kisseos 12",
+        "suite": "Kisseos 12",
+        "city": "Thessaloniki",
+        "zipcode": "57010",
+        "geo": {
+            "lat": "-37.3159",
+            "lng": "81.1496"
+        }
+    },
+    "phone": "6934671398",
+    "website": "datacenter.com",
+    "company": {
+        "name": "SingularLogic",
+        "catchPhrase": "Software Engineer",
+        "bs": "fullstacj"
+    }
+}
+
+PUT http://localhost:3000/users/3 HTTP/1.1
+Content-Type: application/json
+
+{
+	"id": 3,
+	"name": "Iordanidis Chris",
+	"username": "Samantha",
+	"email": "Nathan@yesenia.net",
+	"address": {
+		"street": "Douglas Extension",
+		"suite": "Suite 847",
+		"city": "McKenziehaven",
+		"zipcode": "59590-4157",
+		"geo": {
+			"lat": "-68.6102",
+			"lng": "-47.0653"
+		}
+	},
+	"phone": "1-463-123-4447",
+	"website": "ramiro.info",
+	"company": {
+		"name": "Romaguera-Jacobson",
+		"catchPhrase": "Face to face bifurcated interface",
+		"bs": "e-enable strategic applications"
+	}
+}

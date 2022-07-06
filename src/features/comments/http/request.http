@@ -1,0 +1,24 @@
+GET http://localhost:3000/comments HTTP/1.1
+GET http://localhost:3000/comments/abc HTTP/1.1
+DELETE http://localhost:3000/comments/11 HTTP/1.1
+POST http://localhost:3000/comments HTTP/1.1
+Content-Type: application/json
+
+{
+	"id": 1,
+	"postId": 1,
+	"name": "NEW id labore ex et quam laborum",
+	"email": "NEW Eliseo@gardner.biz",
+	"body": "NEW laudantium enim quasi est quidem magnam voluptate ipsam eos\ntempora quo necessitatibus\ndolor quam autem quasi\nreiciendis et nam sapiente accusantium"
+}
+
+PUT http://localhost:3000/comments/3 HTTP/1.1
+Content-Type: application/json
+
+{
+	"id": 1,
+	"postId": 1,
+	"name": "MODIFIED id labore ex et quam laborum",
+	"email": "MODIFIED Eliseo@gardner.biz",
+	"body": "MODIFIED laudantium enim quasi est quidem magnam voluptate ipsam eos\ntempora quo necessitatibus\ndolor quam autem quasi\nreiciendis et nam sapiente accusantium"
+}
