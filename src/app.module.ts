@@ -9,9 +9,14 @@ import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { HttpModule } from '@nestjs/axios';
 import { DbMiddleware } from './core/db.middleware';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
 	imports: [
+		ConfigModule.forRoot({
+			isGlobal: true,
+			envFilePath: '.env'
+		}),
 		HttpModule,
 		UserModule,
 		TodoModule,
