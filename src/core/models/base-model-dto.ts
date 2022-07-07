@@ -1,3 +1,3 @@
-export interface BaseModelDto {
+export class BaseModelDto {
 	id?: string;
 }

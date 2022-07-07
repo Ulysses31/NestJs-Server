@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { BaseModelDto } from './../core/models/base-model-dto';
+import { BaseModelDto } from 'src/core/models/base-model-dto';
 
-export class PostDto extends BaseModelDto {
+export class CompanyDto extends BaseModelDto {
 	@ApiProperty({
 		type: String,
 		description: 'ID',
@@ -12,25 +12,25 @@ export class PostDto extends BaseModelDto {
 
 	@ApiProperty({
 		type: String,
-		description: 'Post userId',
+		description: 'Company name',
 		nullable: false,
 		required: true
 	})
-	userId?: null | string;
+	name?: null | string;
 
 	@ApiProperty({
 		type: String,
-		description: 'Post title',
+		description: 'Company catchPhrase',
 		nullable: false,
 		required: true
 	})
-	title?: null | string;
+	catchPhrase?: null | string;
 
 	@ApiProperty({
 		type: String,
-		description: 'Post body',
+		description: 'Company bs',
 		nullable: false,
 		required: true
 	})
-	body?: null | string;
+	bs?: null | string;
 }
