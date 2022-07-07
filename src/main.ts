@@ -1,4 +1,3 @@
-import { UserModule } from './features/users/users.module';
 import { TimeInterceptor } from './core/time.interceptor';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
@@ -37,6 +36,13 @@ async function bootstrap() {
 			'info@datacenter.com'
 		)
 		.setLicense('MIT', '')
+		.addServer('http://localhost:3000')
+		.addServer('https://localhost:3000')
+		// .addSecurity('basic', {
+		// 	type: 'http',
+		// 	scheme: 'basic'
+		// })
+		// .addBasicAuth()
 		.build();
 
 	const customOptions: SwaggerCustomOptions = {
@@ -47,6 +53,7 @@ async function bootstrap() {
 	};
 
 	const docOptions: SwaggerDocumentOptions = {
+		ignoreGlobalPrefix: true,
 		operationIdFactory: (controllerKey: string, methodKey: string) =>
 			methodKey
 	};
