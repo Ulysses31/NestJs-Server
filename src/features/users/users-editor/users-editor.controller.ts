@@ -32,6 +32,7 @@ import {
 
 @Controller('Users')
 @ApiTags('Users')
+// @ApiSecurity('basic')
 @ApiBadRequestResponse({ description: 'Bad Request' })
 @ApiUnauthorizedResponse({ description: 'User not authorized' })
 @ApiForbiddenResponse({ description: 'Request is forbidden' })

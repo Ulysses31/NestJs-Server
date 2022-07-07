@@ -10,18 +10,22 @@ import { UserDto } from 'src/models/user-dto';
 import { UserService } from '../service/users.service';
 import {
 	ApiBadRequestResponse,
+	ApiBasicAuth,
 	ApiForbiddenResponse,
 	ApiInternalServerErrorResponse,
 	ApiNotAcceptableResponse,
 	ApiNotFoundResponse,
 	ApiOkResponse,
 	ApiProduces,
+	ApiSecurity,
 	ApiTags,
 	ApiUnauthorizedResponse
 } from '@nestjs/swagger';
 
 @Controller('Users')
 @ApiTags('Users')
+// @ApiSecurity('basic')
+// @ApiBasicAuth()
 @ApiBadRequestResponse({ description: 'Bad Request' })
 @ApiUnauthorizedResponse({ description: 'User not authorized' })
 @ApiForbiddenResponse({ description: 'Request is forbidden' })
