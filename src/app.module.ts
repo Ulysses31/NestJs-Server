@@ -10,6 +10,7 @@ import { AppController } from './app.controller';
 import { HttpModule } from '@nestjs/axios';
 import { DbMiddleware } from './core/db.middleware';
 import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from './core/authentication/auth.module';
 
 @Module({
 	imports: [
@@ -18,10 +19,11 @@ import { ConfigModule } from '@nestjs/config';
 			envFilePath: '.env'
 		}),
 		HttpModule,
-		UserModule,
+		AuthModule,
 		TodoModule,
 		PhotoModule,
 		CommentModule,
+		UserModule,
 		PostModule
 	],
 	controllers: [AppController],
