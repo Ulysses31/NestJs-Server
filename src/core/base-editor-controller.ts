@@ -8,13 +8,13 @@ export abstract class BaseEditorController<
 > {
 	model?: TModel;
 
-	abstract findById(id: number): Observable<AxiosResponse<TModel>>;
-	abstract newDto(dto: TModel): Observable<AxiosResponse<TModel>>;
-	abstract updateDto(
+	abstract findByIdV1(id: number): Observable<AxiosResponse<TModel>>;
+	abstract newDtoV1(dto: TModel): Observable<AxiosResponse<TModel>>;
+	abstract updateDtoV1(
 		id: number,
 		dto: TModel
 	): Observable<AxiosResponse<TModel>>;
-	abstract deleteDto(id: number): Observable<AxiosResponse<TModel>>;
+	abstract deleteDtoV1(id: number): Observable<AxiosResponse<TModel>>;
 
 	constructor(public baseService: BaseService<TModel>) {}
 

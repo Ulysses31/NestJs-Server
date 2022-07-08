@@ -43,6 +43,7 @@ async function bootstrap() {
 		// 	scheme: 'basic'
 		// })
 		// .addBasicAuth()
+		.addBearerAuth()
 		.build();
 
 	const customOptions: SwaggerCustomOptions = {

@@ -8,12 +8,13 @@ import {
 	ParseIntPipe,
 	Post,
 	Put,
+	UseGuards,
 	Version
 } from '@nestjs/common';
 import { BaseEditorController } from 'src/core/base-Editor-controller';
 import { AxiosResponse } from 'axios';
 import { Observable } from 'rxjs';
-import { CommentDto } from 'src/models/comment-dto';
+import { CommentDto } from 'src/models/comment.dto';
 import { CommentService } from '../service/comments.service';
 import {
 	ApiTags,
@@ -27,11 +28,16 @@ import {
 	ApiOkResponse,
 	ApiBody,
 	ApiConsumes,
-	ApiCreatedResponse
+	ApiCreatedResponse,
+	ApiBearerAuth,
+	ApiOperation
 } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
 
 @Controller('Comments')
+@UseGuards(JwtAuthGuard)
 @ApiTags('Comments')
+@ApiBearerAuth()
 @ApiBadRequestResponse({ description: 'Bad Request' })
 @ApiUnauthorizedResponse({ description: 'User not authorized' })
 @ApiForbiddenResponse({ description: 'Request is forbidden' })
@@ -49,9 +55,10 @@ export class CommentsEditorController extends BaseEditorController<CommentDto> {
 
 	@Get(':id')
 	@Version('1')
+	@ApiOperation({ description: 'Get comment by id' })
 	@ApiProduces('application/json', 'application/xml')
 	@ApiOkResponse({ description: 'OK success', type: CommentDto })
-	findById(
+	findByIdV1(
 		@Param(
 			'id',
 			new ParseIntPipe({
@@ -65,6 +72,7 @@ export class CommentsEditorController extends BaseEditorController<CommentDto> {
 
 	@Post()
 	@Version('1')
+	@ApiOperation({ description: 'Insert new comment' })
 	@ApiBody({ type: CommentDto })
 	@ApiProduces('application/json', 'application/xml')
 	@ApiConsumes('application/json', 'application/xml')
@@ -72,7 +80,7 @@ export class CommentsEditorController extends BaseEditorController<CommentDto> {
 		description: 'The record has been successfully created',
 		type: CommentDto
 	})
-	newDto(
+	newDtoV1(
 		@Body() dto: CommentDto
 	): Observable<AxiosResponse<CommentDto>> {
 		return this.insertNewDto(dto);
@@ -80,6 +88,7 @@ export class CommentsEditorController extends BaseEditorController<CommentDto> {
 
 	@Put(':id')
 	@Version('1')
+	@ApiOperation({ description: 'Update existing comment' })
 	@ApiBody({ type: CommentDto })
 	@ApiProduces('application/json', 'application/xml')
 	@ApiConsumes('application/json', 'application/xml')
@@ -87,7 +96,7 @@ export class CommentsEditorController extends BaseEditorController<CommentDto> {
 		description: 'The record has been successfully updated',
 		type: CommentDto
 	})
-	updateDto(
+	updateDtoV1(
 		@Param(
 			'id',
 			new ParseIntPipe({
@@ -102,12 +111,13 @@ export class CommentsEditorController extends BaseEditorController<CommentDto> {
 
 	@Delete(':id')
 	@Version('1')
+	@ApiOperation({ description: 'Delete comment' })
 	@ApiProduces('application/json', 'application/xml')
 	@ApiOkResponse({
 		description: 'The record has been successfully deleted',
 		type: CommentDto
 	})
-	deleteDto(
+	deleteDtoV1(
 		@Param(
 			'id',
 			new ParseIntPipe({

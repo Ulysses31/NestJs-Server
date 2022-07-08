@@ -1,8 +1,8 @@
-import { Controller, Get, Version } from '@nestjs/common';
+import { Controller, Get, UseGuards, Version } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { BaseBrowserController } from 'src/core/base-browser-controller';
 import { AxiosResponse } from 'axios';
-import { PostDto } from 'src/models/post-dto';
+import { PostDto } from 'src/models/post.dto';
 import { PostService } from '../service/posts.service';
 import {
 	ApiTags,
@@ -13,11 +13,16 @@ import {
 	ApiInternalServerErrorResponse,
 	ApiProduces,
 	ApiOkResponse,
-	ApiBadRequestResponse
+	ApiBadRequestResponse,
+	ApiBearerAuth,
+	ApiOperation
 } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
 
 @Controller('Posts')
+@UseGuards(JwtAuthGuard)
 @ApiTags('Posts')
+@ApiBearerAuth()
 @ApiBadRequestResponse({ description: 'Bad Request' })
 @ApiUnauthorizedResponse({ description: 'User not authorized' })
 @ApiForbiddenResponse({ description: 'Request is forbidden' })
@@ -35,9 +40,10 @@ export class PostsBrowserController extends BaseBrowserController<PostDto> {
 
 	@Get()
 	@Version('1')
+	@ApiOperation({ description: 'List of posts' })
 	@ApiProduces('application/json', 'application/xml')
 	@ApiOkResponse({ description: 'OK success', type: PostDto })
-	findAll(): Observable<AxiosResponse<PostDto[]>> {
+	findAllV1(): Observable<AxiosResponse<PostDto[]>> {
 		return this.findDtoAll();
 	}
 }

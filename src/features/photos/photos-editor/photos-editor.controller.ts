@@ -8,12 +8,13 @@ import {
 	ParseIntPipe,
 	Post,
 	Put,
+	UseGuards,
 	Version
 } from '@nestjs/common';
 import { BaseEditorController } from 'src/core/base-Editor-controller';
 import { AxiosResponse } from 'axios';
 import { Observable } from 'rxjs';
-import { PhotoDto } from 'src/models/photo-dto';
+import { PhotoDto } from 'src/models/photo.dto';
 import { PhotoService } from '../service/Photos.service';
 import {
 	ApiTags,
@@ -27,11 +28,16 @@ import {
 	ApiOkResponse,
 	ApiBody,
 	ApiConsumes,
-	ApiCreatedResponse
+	ApiCreatedResponse,
+	ApiBearerAuth,
+	ApiOperation
 } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
 
 @Controller('Photos')
+@UseGuards(JwtAuthGuard)
 @ApiTags('Photos')
+@ApiBearerAuth()
 @ApiBadRequestResponse({ description: 'Bad Request' })
 @ApiUnauthorizedResponse({ description: 'User not authorized' })
 @ApiForbiddenResponse({ description: 'Request is forbidden' })
@@ -49,9 +55,10 @@ export class PhotosEditorController extends BaseEditorController<PhotoDto> {
 
 	@Get(':id')
 	@Version('1')
+	@ApiOperation({ description: 'Get photo by id' })
 	@ApiProduces('application/json', 'application/xml')
 	@ApiOkResponse({ description: 'OK success', type: PhotoDto })
-	findById(
+	findByIdV1(
 		@Param(
 			'id',
 			new ParseIntPipe({
@@ -65,6 +72,7 @@ export class PhotosEditorController extends BaseEditorController<PhotoDto> {
 
 	@Post()
 	@Version('1')
+	@ApiOperation({ description: 'Insert new photo' })
 	@ApiBody({ type: PhotoDto })
 	@ApiProduces('application/json', 'application/xml')
 	@ApiConsumes('application/json', 'application/xml')
@@ -72,12 +80,13 @@ export class PhotosEditorController extends BaseEditorController<PhotoDto> {
 		description: 'The record has been successfully created',
 		type: PhotoDto
 	})
-	newDto(@Body() dto: PhotoDto): Observable<AxiosResponse<PhotoDto>> {
+	newDtoV1(@Body() dto: PhotoDto): Observable<AxiosResponse<PhotoDto>> {
 		return this.insertNewDto(dto);
 	}
 
 	@Put(':id')
 	@Version('1')
+	@ApiOperation({ description: 'Update existing photo' })
 	@ApiBody({ type: PhotoDto })
 	@ApiProduces('application/json', 'application/xml')
 	@ApiConsumes('application/json', 'application/xml')
@@ -85,7 +94,7 @@ export class PhotosEditorController extends BaseEditorController<PhotoDto> {
 		description: 'The record has been successfully updated',
 		type: PhotoDto
 	})
-	updateDto(
+	updateDtoV1(
 		@Param(
 			'id',
 			new ParseIntPipe({
@@ -100,12 +109,13 @@ export class PhotosEditorController extends BaseEditorController<PhotoDto> {
 
 	@Delete(':id')
 	@Version('1')
+	@ApiOperation({ description: 'Delete photo' })
 	@ApiProduces('application/json', 'application/xml')
 	@ApiOkResponse({
 		description: 'The record has been successfully deleted',
 		type: PhotoDto
 	})
-	deleteDto(
+	deleteDtoV1(
 		@Param(
 			'id',
 			new ParseIntPipe({

@@ -1,8 +1,8 @@
-import { Controller, Get, Version } from '@nestjs/common';
+import { Controller, Get, UseGuards, Version } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { BaseBrowserController } from 'src/core/base-browser-controller';
 import { AxiosResponse } from 'axios';
-import { CommentDto } from 'src/models/comment-dto';
+import { CommentDto } from 'src/models/comment.dto';
 import { CommentService } from '../service/comments.service';
 import {
 	ApiTags,
@@ -13,11 +13,16 @@ import {
 	ApiNotAcceptableResponse,
 	ApiInternalServerErrorResponse,
 	ApiProduces,
-	ApiOkResponse
+	ApiOkResponse,
+	ApiBearerAuth,
+	ApiOperation
 } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
 
 @Controller('Comments')
+@UseGuards(JwtAuthGuard)
 @ApiTags('Comments')
+@ApiBearerAuth()
 @ApiBadRequestResponse({ description: 'Bad Request' })
 @ApiUnauthorizedResponse({ description: 'User not authorized' })
 @ApiForbiddenResponse({ description: 'Request is forbidden' })
@@ -35,9 +40,10 @@ export class CommentsBrowserController extends BaseBrowserController<CommentDto>
 
 	@Get()
 	@Version('1')
+	@ApiOperation({ description: 'List of comments' })
 	@ApiProduces('application/json', 'application/xml')
 	@ApiOkResponse({ description: 'OK success', type: CommentDto })
-	findAll(): Observable<AxiosResponse<CommentDto[]>> {
+	findAllV1(): Observable<AxiosResponse<CommentDto[]>> {
 		return this.findDtoAll();
 	}
 }

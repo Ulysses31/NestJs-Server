@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
-import { UserDto } from 'src/models/user-dto';
+import { UserDto } from 'src/models/user.dto';
 import { BaseService } from 'src/core/services/base.service';
 
 @Injectable()

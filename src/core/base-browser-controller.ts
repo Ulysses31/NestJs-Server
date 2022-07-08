@@ -8,7 +8,7 @@ export abstract class BaseBrowserController<
 > {
 	model?: TModel[] = [];
 
-	abstract findAll(): Observable<AxiosResponse<TModel[]>>;
+	abstract findAllV1(): Observable<AxiosResponse<TModel[]>>;
 
 	constructor(public baseService: BaseService<TModel>) {}
 

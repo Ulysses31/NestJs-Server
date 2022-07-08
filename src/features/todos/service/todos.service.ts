@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
-import { TodoDto } from 'src/models/todo-dto';
+import { TodoDto } from 'src/models/todo.dto';
 import { BaseService } from 'src/core/services/base.service';
 
 @Injectable()

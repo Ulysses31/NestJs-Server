@@ -1,4 +1,4 @@
-import { GeoDto } from './geo-dto';
+import { GeoDto } from './geo.dto';
 import { BaseModelDto } from 'src/core/models/base-model-dto';
 import { ApiProperty } from '@nestjs/swagger';
 

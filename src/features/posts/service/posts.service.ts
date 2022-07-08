@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { BaseService } from 'src/core/services/base.service';
-import { PostDto } from 'src/models/post-dto';
+import { PostDto } from 'src/models/post.dto';
 
 @Injectable()
 export class PostService extends BaseService<PostDto> {

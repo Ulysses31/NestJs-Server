@@ -1,5 +1,5 @@
-import { CompanyDto } from './company-dto';
-import { AddressDto } from './address-dto';
+import { CompanyDto } from './company.dto';
+import { AddressDto } from './address.dto';
 import { BaseModelDto } from './../core/models/base-model-dto';
 import { ApiProperty } from '@nestjs/swagger';
 

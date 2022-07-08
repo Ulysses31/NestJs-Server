@@ -8,13 +8,14 @@ import {
 	ParseIntPipe,
 	Post,
 	Put,
+	UseGuards,
 	Version
 } from '@nestjs/common';
 import { BaseEditorController } from 'src/core/base-Editor-controller';
 import { AxiosResponse } from 'axios';
 import { Observable } from 'rxjs';
 import { PostService } from '../service/posts.service';
-import { PostDto } from 'src/models/post-dto';
+import { PostDto } from 'src/models/post.dto';
 import {
 	ApiTags,
 	ApiUnauthorizedResponse,
@@ -27,11 +28,16 @@ import {
 	ApiBody,
 	ApiConsumes,
 	ApiCreatedResponse,
-	ApiBadRequestResponse
+	ApiBadRequestResponse,
+	ApiBearerAuth,
+	ApiOperation
 } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
 
 @Controller('Posts')
+@UseGuards(JwtAuthGuard)
 @ApiTags('Posts')
+@ApiBearerAuth()
 @ApiBadRequestResponse({ description: 'Bad Request' })
 @ApiUnauthorizedResponse({ description: 'User not authorized' })
 @ApiForbiddenResponse({ description: 'Request is forbidden' })
@@ -49,9 +55,10 @@ export class PostsEditorController extends BaseEditorController<PostDto> {
 
 	@Get(':id')
 	@Version('1')
+	@ApiOperation({ description: 'Get post by id' })
 	@ApiProduces('application/json', 'application/xml')
 	@ApiOkResponse({ description: 'OK success', type: PostDto })
-	findById(
+	findByIdV1(
 		@Param(
 			'id',
 			new ParseIntPipe({
@@ -65,6 +72,7 @@ export class PostsEditorController extends BaseEditorController<PostDto> {
 
 	@Post()
 	@Version('1')
+	@ApiOperation({ description: 'Insert new post' })
 	@ApiBody({ type: PostDto })
 	@ApiProduces('application/json', 'application/xml')
 	@ApiConsumes('application/json', 'application/xml')
@@ -72,12 +80,13 @@ export class PostsEditorController extends BaseEditorController<PostDto> {
 		description: 'The record has been successfully created',
 		type: PostDto
 	})
-	newDto(@Body() dto: PostDto): Observable<AxiosResponse<PostDto>> {
+	newDtoV1(@Body() dto: PostDto): Observable<AxiosResponse<PostDto>> {
 		return this.insertNewDto(dto);
 	}
 
 	@Put(':id')
 	@Version('1')
+	@ApiOperation({ description: 'Update existing post' })
 	@ApiBody({ type: PostDto })
 	@ApiProduces('application/json', 'application/xml')
 	@ApiConsumes('application/json', 'application/xml')
@@ -85,7 +94,7 @@ export class PostsEditorController extends BaseEditorController<PostDto> {
 		description: 'The record has been successfully updated',
 		type: PostDto
 	})
-	updateDto(
+	updateDtoV1(
 		@Param(
 			'id',
 			new ParseIntPipe({
@@ -100,12 +109,13 @@ export class PostsEditorController extends BaseEditorController<PostDto> {
 
 	@Delete(':id')
 	@Version('1')
+	@ApiOperation({ description: 'Delete todo' })
 	@ApiProduces('application/json', 'application/xml')
 	@ApiOkResponse({
 		description: 'The record has been successfully deleted',
 		type: PostDto
 	})
-	deleteDto(
+	deleteDtoV1(
 		@Param(
 			'id',
 			new ParseIntPipe({

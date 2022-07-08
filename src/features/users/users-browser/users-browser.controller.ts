@@ -1,27 +1,30 @@
-import { Controller, Get, Version } from '@nestjs/common';
+import { Controller, Get, UseGuards, Version } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { BaseBrowserController } from 'src/core/base-browser-controller';
 import { AxiosResponse } from 'axios';
-import { UserDto } from 'src/models/user-dto';
+import { UserDto } from 'src/models/user.dto';
 import { UserService } from '../service/users.service';
 import {
 	ApiBadRequestResponse,
-	ApiBasicAuth,
+	ApiBearerAuth,
 	ApiForbiddenResponse,
 	ApiInternalServerErrorResponse,
 	ApiNotAcceptableResponse,
 	ApiNotFoundResponse,
 	ApiOkResponse,
+	ApiOperation,
 	ApiProduces,
-	ApiSecurity,
 	ApiTags,
 	ApiUnauthorizedResponse
 } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
 
 @Controller('Users')
+@UseGuards(JwtAuthGuard)
 @ApiTags('Users')
 // @ApiSecurity('basic')
 // @ApiBasicAuth()
+@ApiBearerAuth()
 @ApiBadRequestResponse({ description: 'Bad Request' })
 @ApiUnauthorizedResponse({ description: 'User not authorized' })
 @ApiForbiddenResponse({ description: 'Request is forbidden' })
@@ -39,9 +42,10 @@ export class UsersBrowserController extends BaseBrowserController<UserDto> {
 
 	@Get()
 	@Version('1')
+	@ApiOperation({ description: 'List of users' })
 	@ApiProduces('application/json', 'application/xml')
 	@ApiOkResponse({ description: 'OK success', type: UserDto })
-	findAll(): Observable<AxiosResponse<UserDto[]>> {
+	findAllV1(): Observable<AxiosResponse<UserDto[]>> {
 		return this.findDtoAll();
 	}
 }

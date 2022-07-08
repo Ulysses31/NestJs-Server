@@ -9,14 +9,16 @@ import {
 	ParseIntPipe,
 	Post,
 	Put,
+	UseGuards,
 	Version
 } from '@nestjs/common';
 import { BaseEditorController } from 'src/core/base-Editor-controller';
 import { AxiosResponse } from 'axios';
 import { Observable } from 'rxjs';
-import { UserDto } from 'src/models/user-dto';
+import { UserDto } from 'src/models/user.dto';
 import {
 	ApiBadRequestResponse,
+	ApiBearerAuth,
 	ApiBody,
 	ApiConsumes,
 	ApiCreatedResponse,
@@ -25,13 +27,17 @@ import {
 	ApiNotAcceptableResponse,
 	ApiNotFoundResponse,
 	ApiOkResponse,
+	ApiOperation,
 	ApiProduces,
 	ApiTags,
 	ApiUnauthorizedResponse
 } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
 
 @Controller('Users')
+@UseGuards(JwtAuthGuard)
 @ApiTags('Users')
+@ApiBearerAuth()
 // @ApiSecurity('basic')
 @ApiBadRequestResponse({ description: 'Bad Request' })
 @ApiUnauthorizedResponse({ description: 'User not authorized' })
@@ -50,9 +56,10 @@ export class UsersEditorController extends BaseEditorController<UserDto> {
 
 	@Get(':id')
 	@Version('1')
+	@ApiOperation({ description: 'Get user by id' })
 	@ApiProduces('application/json', 'application/xml')
 	@ApiOkResponse({ description: 'OK success', type: UserDto })
-	findById(
+	findByIdV1(
 		@Param(
 			'id',
 			new ParseIntPipe({
@@ -66,6 +73,7 @@ export class UsersEditorController extends BaseEditorController<UserDto> {
 
 	@Post()
 	@Version('1')
+	@ApiOperation({ description: 'Insert new user' })
 	@ApiBody({ type: UserDto })
 	@ApiProduces('application/json', 'application/xml')
 	@ApiConsumes('application/json', 'application/xml')
@@ -73,12 +81,13 @@ export class UsersEditorController extends BaseEditorController<UserDto> {
 		description: 'The record has been successfully created',
 		type: UserDto
 	})
-	newDto(@Body() dto: UserDto): Observable<AxiosResponse<UserDto>> {
+	newDtoV1(@Body() dto: UserDto): Observable<AxiosResponse<UserDto>> {
 		return this.insertNewDto(dto);
 	}
 
 	@Put(':id')
 	@Version('1')
+	@ApiOperation({ description: 'Update existing user' })
 	@ApiBody({ type: UserDto })
 	@ApiProduces('application/json', 'application/xml')
 	@ApiConsumes('application/json', 'application/xml')
@@ -86,7 +95,7 @@ export class UsersEditorController extends BaseEditorController<UserDto> {
 		description: 'The record has been successfully updated',
 		type: UserDto
 	})
-	updateDto(
+	updateDtoV1(
 		@Param(
 			'id',
 			new ParseIntPipe({
@@ -101,12 +110,13 @@ export class UsersEditorController extends BaseEditorController<UserDto> {
 
 	@Delete(':id')
 	@Version('1')
+	@ApiOperation({ description: 'Delete user' })
 	@ApiProduces('application/json', 'application/xml')
 	@ApiOkResponse({
 		description: 'The record has been successfully deleted',
 		type: UserDto
 	})
-	deleteDto(
+	deleteDtoV1(
 		@Param(
 			'id',
 			new ParseIntPipe({
