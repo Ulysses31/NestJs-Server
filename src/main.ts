@@ -27,17 +27,17 @@ async function bootstrap() {
 
 	// swagger openapi
 	const config = new DocumentBuilder()
-		.setTitle('NestJs Server API')
-		.setDescription('The NestJs Server API description')
-		.setVersion('1.0')
+		.setTitle(process.env.SWAGGER_OPENAPI_TITLE)
+		.setDescription(process.env.SWAGGER_OPENAPI_DESCRIPTION)
+		.setVersion(process.env.SWAGGER_OPENAPI_VERSION)
 		.setContact(
-			'Iordanidis Chris',
-			'datacenter.com',
-			'info@datacenter.com'
+			process.env.SWAGGER_OPENAPI_AUTHOR,
+			process.env.SWAGGER_OPENAPI_WEBSITE,
+			process.env.SWAGGER_OPENAPI_CONTACT
 		)
 		.setLicense('MIT', '')
-		.addServer('http://localhost:3000')
-		.addServer('https://localhost:3000')
+		.addServer(`http://${process.env.APP_URL}:${process.env.APP_PORT}`)
+		.addServer(`https://${process.env.APP_URL}:${process.env.APP_PORT}`)
 		// .addSecurity('basic', {
 		// 	type: 'http',
 		// 	scheme: 'basic'
@@ -49,7 +49,7 @@ async function bootstrap() {
 		swaggerOptions: {
 			persistAuthorization: true
 		},
-		customSiteTitle: 'NestJs Server API'
+		customSiteTitle: process.env.SWAGGER_OPENAPI_TAB_TITLE
 	};
 
 	const docOptions: SwaggerDocumentOptions = {
@@ -64,7 +64,7 @@ async function bootstrap() {
 		docOptions
 	);
 	SwaggerModule.setup('api', app, document, customOptions);
-	await app.listen(3000);
+	await app.listen(process.env.APP_PORT);
 	console.log(`Application is running on: ${await app.getUrl()}`);
 }
 

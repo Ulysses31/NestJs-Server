@@ -5,7 +5,7 @@ import { PhotoDto } from 'src/models/photo-dto';
 
 @Injectable()
 export class PhotoService extends BaseService<PhotoDto> {
-	apiUrl: string = 'https://jsonplaceholder.typicode.com/photos';
+	apiUrl: string = process.env.API_URL_PHOTOS;
 
 	constructor(public readonly httpService: HttpService) {
 		super(httpService);

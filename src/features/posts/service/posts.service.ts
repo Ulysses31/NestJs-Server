@@ -5,8 +5,7 @@ import { PostDto } from 'src/models/post-dto';
 
 @Injectable()
 export class PostService extends BaseService<PostDto> {
-	apiUrl: string = 'https://jsonplaceholder.typicode.com/posts';
-
+	apiUrl: string = process.env.API_URL_POSTS;
 	constructor(public readonly httpService: HttpService) {
 		super(httpService);
 		this.setApiUrl(this.apiUrl);

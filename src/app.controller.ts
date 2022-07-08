@@ -1,4 +1,3 @@
-import { JwtRefreshTokenGuard } from './core/authentication/jwt-refresh-token.guard';
 import { JwtAuthGuard } from './core/authentication/jwt-auth.guard';
 import { LocalAuthGuard } from './core/authentication/local-auth.guard';
 import {

@@ -5,7 +5,7 @@ import { CommentDto } from 'src/models/comment-dto';
 
 @Injectable()
 export class CommentService extends BaseService<CommentDto> {
-	apiUrl: string = 'https://jsonplaceholder.typicode.com/comments';
+	apiUrl: string = process.env.API_URL_COMMENTS;
 
 	constructor(public readonly httpService: HttpService) {
 		super(httpService);

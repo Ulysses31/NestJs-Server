@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { userInfo } from 'os';
 import { User } from 'src/core/models/user-model-dto';
 
 @Injectable()

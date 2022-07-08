@@ -5,7 +5,7 @@ import { BaseService } from 'src/core/services/base.service';
 
 @Injectable()
 export class TodoService extends BaseService<TodoDto> {
-	apiUrl: string = 'https://jsonplaceholder.typicode.com/todos';
+	apiUrl: string = process.env.API_URL_TODOS;
 
 	constructor(public readonly httpService: HttpService) {
 		super(httpService);

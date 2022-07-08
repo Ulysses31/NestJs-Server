@@ -1,4 +1,4 @@
-import { JwtConstants } from './../constants';
+import { ConfigService } from '@nestjs/config';
 import {
 	HttpException,
 	HttpStatus,
@@ -9,11 +9,11 @@ import {
 import { UsersAuthService } from '../users-auth/services/users-auth.service';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/core/models/user-model-dto';
-import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
 	constructor(
+		private confService: ConfigService,
 		private usersService: UsersAuthService,
 		private jwtService: JwtService
 	) {}
@@ -31,13 +31,13 @@ export class AuthService {
 		const payload = { username: user.username, sub: user.id };
 		
 		var accToken: string = this.jwtService.sign(payload, {
-			secret: JwtConstants.access_token_secret,
-			expiresIn: JwtConstants.access_token_expiresIn
+			secret: this.confService.get('JWT_TOKEN_SECRET'),
+			expiresIn: this.confService.get('JWT_TOKEN_EXP_H'),
 		});
 		
 		var refrToken: string = this.jwtService.sign(payload, {
-			secret: JwtConstants.refresh_token_secret,
-			expiresIn: JwtConstants.refresh_token_expiresIn
+			secret: this.confService.get('JWT_REFRESH_TOKEN_SECRET'),
+			expiresIn: this.confService.get('JWT_REFRESH_TOKEN_EXP_H')
 		});
 
 		//var usr = this.usersService.findOne(payload.username);
@@ -50,11 +50,11 @@ export class AuthService {
 		return {
 			access_token: {
 				token: accToken,
-				expiresIn: JwtConstants.access_token_expiresIn
+				expiresIn: this.confService.get('JWT_TOKEN_EXP_H')
 			},
 			refresh_token: {
 				token: refrToken,
-				expiresIn: JwtConstants.refresh_token_expiresIn
+				expiresIn: this.confService.get('JWT_REFRESH_TOKEN_EXP_H')
 			},
 			user: {
 				id: usr.id,
@@ -89,7 +89,9 @@ export class AuthService {
 
 			await this.jwtService.verifyAsync(
 				refreshToken,
-				this.getRefreshTokenOptions(user)
+				{
+					secret: this.confService.get('JWT_TOKEN_SECRET')
+				}
 			);
 
 			return this.login(user);
@@ -104,13 +106,4 @@ export class AuthService {
 		// save to db
 	}
 
-	private getRefreshTokenOptions(user: User): JwtConstants {
-		const options: JwtConstants = {
-			// secret: this.config.get().refreshTokenSecret,
-			secret: JwtConstants.access_token_secret,
-			// options.expiresIn = this.config.get().refreshTokenExpiration;
-			expiresIn: JwtConstants.access_token_expiresIn
-		};
-		return options;
-	}
 }
