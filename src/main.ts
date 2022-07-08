@@ -1,7 +1,7 @@
 import { TimeInterceptor } from './core/time.interceptor';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { VersioningType } from '@nestjs/common';
+import { VersioningType, Logger } from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
 import {
 	DocumentBuilder,
@@ -64,8 +64,8 @@ async function bootstrap() {
 		docOptions
 	);
 	SwaggerModule.setup('api', app, document, customOptions);
-
 	await app.listen(3000);
+	console.log(`Application is running on: ${await app.getUrl()}`);
 }
 
 bootstrap();

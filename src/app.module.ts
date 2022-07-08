@@ -1,4 +1,3 @@
-import { CommentsBrowserController } from './features/comments/comments-browser/comments-browser.controller';
 import { PostModule } from './features/posts/posts.module';
 import { CommentModule } from './features/comments/comments.module';
 import { PhotoModule } from './features/photos/photos.module';
