@@ -29,7 +29,7 @@ import { UserDto } from './models/user.dto';
 export class AppController {
 	constructor(private authService: AuthService) {}
 
-	@Post('auth/login')
+	@Post('login')
 	@Version('1')
 	@UseGuards(LocalAuthGuard)
 	@ApiExcludeEndpoint()
